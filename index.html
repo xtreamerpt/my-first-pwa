@@ -2,14 +2,14 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Meu Querido Amor</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital@1&display=swap');
         
         body {
             margin: 0;
-            padding: 0;
+            padding: 20px 0;
             min-height: 100vh;
             background: linear-gradient(135deg, #f5e6d3 0%, #e8d0b0 100%);
             font-family: 'Playfair Display', serif;
@@ -17,8 +17,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            position: relative;
+            overflow-y: auto;           /* Fixed scrolling */
         }
 
         .envelope {
@@ -31,7 +30,8 @@
                         inset 0 0 80px rgba(212, 163, 115, 0.15);
             padding: 40px 30px;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
+            margin: 20px auto;
         }
 
         .envelope::before {
@@ -73,7 +73,6 @@
             line-height: 1.8;
             text-align: justify;
             margin-bottom: 50px;
-            position: relative;
         }
 
         .body-text p {
@@ -131,19 +130,18 @@
 
         @media (max-width: 480px) {
             .envelope {
-                margin: 20px 10px;
                 padding: 35px 25px;
                 border-width: 10px;
+                margin: 15px 10px;
             }
             .to {
-                font-size: 1.9em;
+                font-size: 1.95em;
             }
         }
     </style>
 </head>
 <body>
     <div class="envelope">
-        <!-- Floating hearts -->
         <div class="heart" style="top: 15%; left: 12%; animation-delay: 0s;">♥</div>
         <div class="heart" style="top: 45%; left: 78%; animation-delay: 4s;">♥</div>
         <div class="heart" style="top: 72%; left: 22%; animation-delay: 8s;">♥</div>
@@ -174,9 +172,7 @@
             const envelope = document.querySelector('.envelope');
             envelope.addEventListener('click', () => {
                 envelope.style.transform = 'scale(1.02)';
-                setTimeout(() => {
-                    envelope.style.transform = 'scale(1)';
-                }, 200);
+                setTimeout(() => envelope.style.transform = 'scale(1)', 200);
             });
         });
     </script>
