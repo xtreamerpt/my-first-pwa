@@ -17,7 +17,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow-y: auto;           /* Fixed scrolling */
+            overflow-y: auto;
         }
 
         .envelope {
@@ -28,28 +28,15 @@
             border-radius: 8px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
                         inset 0 0 80px rgba(212, 163, 115, 0.15);
-            padding: 40px 30px;
+            padding: 45px 30px 90px;   /* Extra bottom padding for seal */
             position: relative;
             overflow: visible;
             margin: 20px auto;
         }
 
-        .envelope::before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 120px;
-            height: 120px;
-            background: radial-gradient(circle, rgba(255,182,193,0.4) 0%, transparent 70%);
-            border-radius: 50%;
-            z-index: 0;
-        }
-
         .header {
             text-align: center;
             margin-bottom: 40px;
-            position: relative;
         }
 
         .to {
@@ -70,13 +57,13 @@
 
         .body-text {
             font-size: 1.15em;
-            line-height: 1.8;
+            line-height: 1.85;
             text-align: justify;
-            margin-bottom: 50px;
+            margin-bottom: 45px;
         }
 
         .body-text p {
-            margin-bottom: 1.4em;
+            margin-bottom: 1.5em;
         }
 
         .closing {
@@ -89,62 +76,75 @@
 
         .signature {
             font-family: 'Dancing Script', cursive;
-            font-size: 1.6em;
+            font-size: 1.65em;
             text-align: right;
-            margin-top: 10px;
             color: #5c4033;
         }
 
+        /* Floating hearts */
         .heart {
             position: absolute;
-            font-size: 2.5em;
+            font-size: 2.4em;
             color: #ff6b6b;
-            opacity: 0.15;
-            animation: float 15s infinite ease-in-out;
-            z-index: -1;
+            opacity: 0.18;
+            animation: float 18s infinite ease-in-out;
+            z-index: 1;
+            pointer-events: none;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(10deg); }
+            50% { transform: translateY(-35px) rotate(12deg); }
         }
 
+        /* Wax Seal */
         .seal {
             position: absolute;
-            bottom: 25px;
+            bottom: 30px;
             right: 35px;
-            width: 70px;
-            height: 70px;
+            width: 68px;
+            height: 68px;
             background: radial-gradient(circle, #c44a5b 0%, #a12f3f 100%);
             border-radius: 50%;
             border: 4px solid #fffef5;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.25);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 0.7em;
+            font-size: 0.65em;
             font-weight: bold;
+            line-height: 1.1;
+            text-align: center;
             transform: rotate(-12deg);
+            z-index: 10;
         }
 
         @media (max-width: 480px) {
             .envelope {
-                padding: 35px 25px;
-                border-width: 10px;
+                padding: 40px 25px 100px;
                 margin: 15px 10px;
             }
             .to {
                 font-size: 1.95em;
+            }
+            .seal {
+                width: 62px;
+                height: 62px;
+                font-size: 0.6em;
+                bottom: 35px;
+                right: 30px;
             }
         }
     </style>
 </head>
 <body>
     <div class="envelope">
-        <div class="heart" style="top: 15%; left: 12%; animation-delay: 0s;">♥</div>
-        <div class="heart" style="top: 45%; left: 78%; animation-delay: 4s;">♥</div>
-        <div class="heart" style="top: 72%; left: 22%; animation-delay: 8s;">♥</div>
+        <!-- Floating hearts -->
+        <div class="heart" style="top: 18%; left: 15%; animation-delay: 0s;">♥</div>
+        <div class="heart" style="top: 48%; left: 75%; animation-delay: 5s;">♥</div>
+        <div class="heart" style="top: 75%; left: 20%; animation-delay: 10s;">♥</div>
+        <div class="heart" style="top: 28%; left: 82%; animation-delay: 3s;">♥</div>
 
         <div class="header">
             <h1 class="to">Meu Querido Amor,</h1>
