@@ -1,13 +1,184 @@
-My First PWA
-  
-  
-  
-  
-  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>My Dearest Love</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital@1&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5e6d3 0%, #e8d0b0 100%);
+            font-family: 'Playfair Display', serif;
+            color: #3a2f2f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
 
+        .envelope {
+            width: 100%;
+            max-width: 380px;
+            background: #fffef5;
+            border: 12px solid #d4a373;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+                        inset 0 0 80px rgba(212, 163, 115, 0.15);
+            padding: 40px 30px;
+            position: relative;
+            overflow: hidden;
+        }
 
-  
-Hello, PWA World!
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(255,182,193,0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
 
-  
-This is my very first Progressive Web App.
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .to {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2em;
+            color: #c44a5b;
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        .date {
+            font-size: 0.9em;
+            color: #8b6f47;
+            text-align: right;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .body-text {
+            font-size: 1.15em;
+            line-height: 1.8;
+            text-align: justify;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .body-text p {
+            margin-bottom: 1.4em;
+        }
+
+        .closing {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8em;
+            text-align: right;
+            margin-top: 40px;
+            color: #c44a5b;
+        }
+
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6em;
+            text-align: right;
+            margin-top: 10px;
+            color: #5c4033;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 2.5em;
+            color: #ff6b6b;
+            opacity: 0.15;
+            animation: float 15s infinite ease-in-out;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+
+        .seal {
+            position: absolute;
+            bottom: 25px;
+            right: 35px;
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle, #c44a5b 0%, #a12f3f 100%);
+            border-radius: 50%;
+            border: 4px solid #fffef5;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.7em;
+            font-weight: bold;
+            transform: rotate(-12deg);
+        }
+
+        @media (max-width: 480px) {
+            .envelope {
+                margin: 20px 10px;
+                padding: 35px 25px;
+                border-width: 10px;
+            }
+            .to {
+                font-size: 1.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="envelope">
+        <!-- Floating hearts -->
+        <div class="heart" style="top: 15%; left: 12%; animation-delay: 0s;">♥</div>
+        <div class="heart" style="top: 45%; left: 78%; animation-delay: 4s;">♥</div>
+        <div class="heart" style="top: 72%; left: 22%; animation-delay: 8s;">♥</div>
+
+        <div class="header">
+            <h1 class="to">My Dearest Love,</h1>
+            <div class="date">July 21, 2026</div>
+        </div>
+
+        <div class="body-text">
+            <p>Every time I think of you, my heart feels lighter, as if the whole world has paused just to let me savor this beautiful feeling. Your smile lights up even my darkest days, and your voice is the melody I hear in my dreams.</p>
+            
+            <p>I never knew love could be this profound until you walked into my life. You have become my greatest adventure, my safest place, and my most cherished treasure. Distance may separate us sometimes, but nothing can ever diminish what I feel for you.</p>
+            
+            <p>Thank you for loving me so completely. Thank you for seeing the best in me even when I can't see it myself. I promise to hold your hand through every sunrise and every storm that life may bring.</p>
+        </div>
+
+        <div class="closing">
+            With all my love,<br>
+        </div>
+        <div class="signature">Yours forever,<br>Alex</div>
+
+        <div class="seal">SEALED<br>WITH A KISS</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const envelope = document.querySelector('.envelope');
+            envelope.addEventListener('click', () => {
+                envelope.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    envelope.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
