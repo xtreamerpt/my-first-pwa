@@ -29,7 +29,7 @@
         h2 { margin-top: 0; color: #00ff80; text-align: center; }
         textarea {
             width: 100%;
-            height: 160px;
+            height: 140px;
             background: #0d0d0d;
             border: 1px solid #00ff80;
             border-radius: 8px;
@@ -40,38 +40,58 @@
             box-sizing: border-box;
             outline: none;
         }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
         button {
-            width: 100%;
+            flex: 1;
             padding: 14px;
-            background: #00ff80;
-            color: #000;
             border: none;
             border-radius: 8px;
             font-size: 1em;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 15px;
-            transition: background 0.2s;
         }
-        button:hover { background: #00cc66; }
+        .btn-send { background: #00ff80; color: #000; }
+        .btn-send:hover { background: #00cc66; }
+        .btn-clear { background: #333; color: #ff5555; border: 1px solid #ff5555; }
+        .btn-clear:hover { background: #441111; }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Enviar para o Pager</h2>
         <textarea id="msgInput" placeholder="Escreva a mensagem aqui..."></textarea>
-        <button onclick="enviarMensagem()">ENVIAR MENSAGEM</button>
+        <div class="btn-group">
+            <button class="btn-send" onclick="enviarMensagem()">ENVIAR</button>
+            <button class="btn-clear" onclick="limparHistorico()">LIMPAR CHAT</button>
+        </div>
     </div>
 
     <script>
         const input = document.getElementById('msgInput');
 
-        // Carrega a mensagem atual ao abrir
-        input.value = localStorage.getItem('pagerLoveMessage') || '';
-
         function enviarMensagem() {
-            localStorage.setItem('pagerLoveMessage', input.value);
-            alert("✅ Mensagem enviada para o Pager!");
+            const text = input.value.trim();
+            if (!text) return;
+
+            const messages = JSON.parse(localStorage.getItem('pagerChatHistory') || '[]');
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase();
+            const timeStr = now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+
+            messages.push({ text: text, date: dateStr, time: timeStr });
+            localStorage.setItem('pagerChatHistory', JSON.stringify(messages));
+
+            input.value = '';
+        }
+
+        function limparHistorico() {
+            if (confirm("Apagar todas as mensagens do Pager?")) {
+                localStorage.removeItem('pagerChatHistory');
+            }
         }
     </script>
 </body>
