@@ -122,51 +122,53 @@
         <div class="footer">BATTERY: 87% • MEMORY: 8KB FREE</div>
     </div>
 
-    <script>
-        const display = document.getElementById('display');
-const screen = document.getElementById('screen');
+<script>
+    const display = document.getElementById('display');
+    const screen = document.getElementById('screen');
+    const channel = new BroadcastChannel('pager_channel');
 
-function renderMessages() {
-    const messages = JSON.parse(localStorage.getItem('pagerChatHistory') || '[]');
+    function renderMessages() {
+        const messages = JSON.parse(localStorage.getItem('pagerChatHistory') || '[]');
 
-    if (messages.length === 0) {
-        display.innerHTML = '<div class="empty-state">SEM MENSAGENS...</div>';
-        return;
+        if (messages.length === 0) {
+            display.innerHTML = '<div class="empty-state">SEM MENSAGENS...</div>';
+            return;
+        }
+
+        display.innerHTML = messages.map(msg => `
+            <div class="msg-block">
+                <div class="msg-header">> ${msg.date} ${msg.time}</div>
+                <div class="msg-body">${escapeHtml(msg.text)}</div>
+            </div>
+        `).join('');
+
+        screen.scrollTop = screen.scrollHeight;
     }
 
-    display.innerHTML = messages.map(msg => `
-        <div class="msg-block">
-            <div class="msg-header">> ${msg.date} ${msg.time}</div>
-            <div class="msg-body">${escapeHtml(msg.text)}</div>
-        </div>
-    `).join('');
-
-    screen.scrollTop = screen.scrollHeight;
-}
-
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML.replace(/\n/g, '<br>');
-}
-
-// 1. Atualização em tempo real (se ambos estiverem visíveis, ex: desktop ou ecrã dividido)
-window.addEventListener('storage', (e) => {
-    if (e.key === 'pagerChatHistory') renderMessages();
-});
-
-// 2. CORREÇÃO PARA MOBILE: Atualiza assim que altera de separador e volta ao Pager
-document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') {
-        renderMessages();
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML.replace(/\n/g, '<br>');
     }
-});
 
-// 3. Garante atualização ao focar a janela
-window.addEventListener('focus', renderMessages);
+    // 1. Comunicação direta via BroadcastChannel (instantânea no Desktop e Mobile ativo)
+    channel.onmessage = () => renderMessages();
 
-// Inicializa
-window.onload = renderMessages;
-    </script>
+    // 2. Atualização standard por alteração de Storage
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'pagerChatHistory') renderMessages();
+    });
+
+    // 3. Atualização ao voltar para a aba no telemóvel
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') renderMessages();
+    });
+
+    // 4. Rede de segurança para Mobile: verifica novas mensagens a cada 1.5 segundos
+    setInterval(renderMessages, 1500);
+
+    // Inicializa
+    window.onload = renderMessages;
+</script>
 </body>
 </html>
