@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pager - Amorodaa</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #121212; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+        .container { background: #1e1e1e; padding: 25px; border-radius: 12px; width: 100%; max-width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 1px solid #333; }
+        h2 { margin-top: 0; color: #ff66cc; text-align: center; }
+        textarea { width: 100%; height: 140px; background: #0d0d0d; border: 1px solid #ff66cc; border-radius: 8px; color: #ff66cc; padding: 12px; font-size: 1.1em; resize: vertical; box-sizing: border-box; outline: none; }
+        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
+        button { flex: 1; padding: 14px; border: none; border-radius: 8px; font-size: 1em; font-weight: bold; cursor: pointer; }
+        .btn-send { background: #ff66cc; color: #000; }
+        .btn-send:hover { background: #e055b3; }
+        .btn-clear { background: #333; color: #ff5555; border: 1px solid #ff5555; }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Enviar como: Amorodaa 💖</h2>
+        <textarea id="msgInput" placeholder="Escreva a tua mensagem de Amorodaa..."></textarea>
+        <div class="btn-group">
+            <button class="btn-send" onclick="enviarMensagem()">ENVIAR</button>
+            <button class="btn-clear" onclick="limparHistorico()">LIMPAR CHAT</button>
+        </div>
+    </div>
+
+    <script>
+        const firebaseConfig = { databaseURL: "https://pager1997-7a567-default-rtdb.europe-west1.firebasedatabase.app/" };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database().ref('pagerMessages');
+
+        function enviarMensagem() {
+            const input = document.getElementById('msgInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase();
+            const timeStr = now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+
+            db.push({
+                sender: "Amorodaa 💖",
+                text: text,
+                date: dateStr,
+                time: timeStr,
+                timestamp: Date.now()
+            });
+
+            input.value = '';
+        }
+
+        function limparHistorico() {
+            if (confirm("Apagar todas as mensagens do Pager?")) db.remove();
+        }
+    </script>
+</body>
+</html>
