@@ -2,6 +2,7 @@ const CACHE_NAME = "pwa-dynamic-cache";
 const urlsToCache = [
   "./",
   "./index.html",
+  "./pager.html",
   "./manifest.json"
 ];
 
